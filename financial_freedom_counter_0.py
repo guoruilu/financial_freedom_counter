@@ -22,5 +22,20 @@ def wealth_free_trace(ORIG_MONEY, R, C):
     
     return year
 
+def required_orig_money_iter(R, C, Y_expect):
+    """
+    使用逐年反推的方式计算所需初始资金
+    """
+    money = 0.0  # 第 Y 年消费后剩余
 
-wealth_free_trace(700_0000, 0.015, 30_0000)
+    for _ in range(Y_expect):
+        # 反推到上一年年初
+        money = money / (1 + R) + C
+
+    return money
+
+
+
+# wealth_free_trace(1000_0000, 0.015, 10_0000)
+money = required_orig_money_iter(0.015, 30_0000, 50)
+wealth_free_trace(money, 0.015, 30_0000)
